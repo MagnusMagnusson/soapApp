@@ -9,4 +9,6 @@ media
 # Backup files # 
 *.bak 
 
+*.db
+
 node_modules
