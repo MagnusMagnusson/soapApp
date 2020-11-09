@@ -1,0 +1,10 @@
+
+body{
+    background-image: url("/licensed/077.jpg");
+    background-repeat: repeat;
+    background-size: 20%;
+}
+
+html, body {
+    height: 100%;
+  }

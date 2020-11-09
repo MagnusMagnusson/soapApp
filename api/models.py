@@ -28,12 +28,12 @@ class Ingredient(models.Model):
 
     def object(self):
         return {
-            'id': self.id,
+            'id': self.id, # pylint: disable=no-member
             'name':self.name,
             'type': self.ingredient_type,
             'type_name': [name for (key,name) in self.INGREDIENT_TYPE_CHOICE if key==self.ingredient_type][0],
             'notes':self.notes,
-            'picture_path':self.image.url if bool(self.image) else "",
+            'picture_path':self.image.url if bool(self.image) else "", # pylint: disable=no-member
         }
 
 class Recipie(models.Model):
@@ -42,11 +42,11 @@ class Recipie(models.Model):
     image = models.FileField(upload_to="uploads/img/recipies/", null=True)
     def object(self):
         return {
-            'id':self.id,
+            'id':self.id, # pylint: disable=no-member
             'name':self.name,
             'notes':self.notes,
-            'ingredients':[x.object() for x in self.RecipieIngredient_set.all()],
-            'picture_path':self.image.url if bool(self.image) else "",
+            'ingredients':[x.object() for x in self.RecipieIngredient_set.all()], # pylint: disable=no-member
+            'picture_path':self.image.url if bool(self.image) else "", # pylint: disable=no-member
         }
 
 class RecipieIngredient(models.Model):
@@ -57,11 +57,11 @@ class RecipieIngredient(models.Model):
         return{ 
         'ingredient':{
             'name':self.ingredient.name,
-            'id':self.ingredient.id
+            'id':self.ingredient.id # pylint: disable=no-member
         },
         'recipie':{
             'name':self.recipie.name,
-            'id':self.recipie.id
+            'id':self.recipie.id # pylint: disable=no-member
         },
         'amount':self.amount+'g'
         }
@@ -74,9 +74,9 @@ class Design(models.Model):
     def object(self):
         return{
             'name':self.name,
-            'id':self.id,
-            'ingredients':[{'id':x.id, 'name':x.name} for x in self.ingredients],
-            'picture_path':self.image.url if bool(self.image) else "",
+            'id':self.id, # pylint: disable=no-member
+            'ingredients':[{'id':x.id, 'name':x.name} for x in self.ingredients.all()], # pylint: disable=no-member
+            'picture_path':self.image.url if bool(self.image) else "", # pylint: disable=no-member
             'notes':self.notes
         }
 
@@ -87,13 +87,15 @@ class Batch(models.Model):
     notes = models.TextField(default="")
     image = models.FileField(upload_to="uploads/img/batches/", null=True)
     def object(self):
+        states = self.Batch_State_set.all().order_by('date')
         return {
             'name':self.name,
-            'design':{ 'name':self.design.name, 'id':self.design.id},
-            'recipie':{ 'name':self.recipie.name, 'id':self.recipie.id},
+            'design':{ 'name':self.design.name, 'id':self.design.id}, # pylint: disable=no-member
+            'recipie':{ 'name':self.recipie.name, 'id':self.recipie.id}, # pylint: disable=no-member
             'notes':self.notes,
-            'picture_path':self.image.url if bool(self.image) else "",
-            'progress':[x.object for x in self.Batch_State_set.all()]
+            'picture_path':self.image.url if bool(self.image) else "", # pylint: disable=no-member
+            'status':[x.object() for x in states], # pylint: disable=no-member
+            'current_status': states[0].object() if len(states) > 0 else None # pylint: disable=no-member
         }
 
 class Batch_State(models.Model):
@@ -121,7 +123,7 @@ class Batch_State(models.Model):
     def object(self):
         return{
             'state':self.state,
-            'state_description':[x for (a,x) in self.STATE_TYPE_CHOICE if a==this.state][0],
+            'state_description':[x for (a,x) in self.STATE_TYPE_CHOICE if a==self.state][0],
             'date':self.date
         }
     

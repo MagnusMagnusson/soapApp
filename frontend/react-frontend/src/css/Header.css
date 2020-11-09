@@ -1,0 +1,34 @@
+.header{
+    background: #cee0e9; 
+    position: relative;
+    top:0px;   
+    border-radius: 7%;    
+    width:100%;
+    box-shadow: -4px 3px 20px -3px rgba(0,0,0,0.75);
+}
+.header h1{
+    width:20%;
+}
+.navbar{
+    width: 33%;
+    position: absolute;
+    top: 25%;
+    right:0px;
+}
+
+.navbar a{
+    margin-left:5%;
+    right:0px;
+    text-decoration-line: none;
+    color:gray;    
+    font-weight: bolder;
+}
+
+
+.navbar a:hover{
+    color:black;
+}
+
+.navbar .here{
+    color:black;
+}

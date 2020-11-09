@@ -12,3 +12,5 @@ media
 *.db
 
 node_modules
+
+licensed/

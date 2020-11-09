@@ -7,7 +7,7 @@ from django.http import JsonResponse
 def respond(object, status=200):
     return JsonResponse({
         "success":status==200,
-        "results":object
+        "result":object
     }
     ,status=status)
 
@@ -17,3 +17,8 @@ def get_by_id(request, object=None, id=None):
         return respond(x[0].object())
     else:
         return respond({},404)
+
+def get_all(request, object = None):
+    x = object.objects.all()
+    res = [a.object() for a in x]
+    return respond(res, 200)

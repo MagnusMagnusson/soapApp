@@ -1,0 +1,15 @@
+.classTable{
+    width:100%;
+    text-align: center;
+    position: relative;
+    top:3em;
+}
+
+.classTable table{
+    width:90%;
+}
+
+.classTable th{
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
