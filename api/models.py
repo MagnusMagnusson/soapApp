@@ -29,13 +29,12 @@ class Ingredient(models.Model):
     def object(self):
         return {
             'id': self.id,
+            'name':self.name,
             'type': self.ingredient_type,
             'type_name': [name for (key,name) in self.INGREDIENT_TYPE_CHOICE if key==self.ingredient_type][0],
             'notes':self.notes,
-            'picture_path':self.image
+            'picture_path':self.image.url if bool(self.image) else "",
         }
-
-
 
 class Recipie(models.Model):
     name = models.CharField(max_length=128, null=False, default="Uppskrift")
@@ -47,7 +46,7 @@ class Recipie(models.Model):
             'name':self.name,
             'notes':self.notes,
             'ingredients':[x.object() for x in self.RecipieIngredient_set.all()],
-            'picture_path':self.image
+            'picture_path':self.image.url if bool(self.image) else "",
         }
 
 class RecipieIngredient(models.Model):
@@ -67,7 +66,6 @@ class RecipieIngredient(models.Model):
         'amount':self.amount+'g'
         }
         
-
 class Design(models.Model):
     name = models.CharField(max_length=128)
     notes = models.TextField(default="")
@@ -78,7 +76,7 @@ class Design(models.Model):
             'name':self.name,
             'id':self.id,
             'ingredients':[{'id':x.id, 'name':x.name} for x in self.ingredients],
-            'picture_path':self.image,
+            'picture_path':self.image.url if bool(self.image) else "",
             'notes':self.notes
         }
 
@@ -94,10 +92,9 @@ class Batch(models.Model):
             'design':{ 'name':self.design.name, 'id':self.design.id},
             'recipie':{ 'name':self.recipie.name, 'id':self.recipie.id},
             'notes':self.notes,
-            'picture_path':self.image,
+            'picture_path':self.image.url if bool(self.image) else "",
             'progress':[x.object for x in self.Batch_State_set.all()]
         }
-
 
 class Batch_State(models.Model):
     STATE_DESIGN = '0_DES'
