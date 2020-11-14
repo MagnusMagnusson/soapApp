@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from api.models import Ingredient,Recipie,Design,Batch
-from api.views import get_all, get_by_id 
+from api.views import processGroupRequest, get_all, get_by_id 
 
 
 urlpatterns = [
@@ -24,7 +24,7 @@ urlpatterns = [
     path("api/d/<int:id>", get_by_id,{"object":Design}),
     path("api/b/<int:id>", get_by_id,{"object":Batch}),
 
-    path("api/i/", get_all,{"object":Ingredient}),
+    path("api/i/", processGroupRequest,{"object":Ingredient}),
     path("api/r/", get_all,{"object":Recipie}),
     path("api/d/", get_all,{"object":Design}),
     path("api/b/", get_all,{"object":Batch}),

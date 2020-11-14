@@ -1,3 +1,4 @@
+ 
 import BatchTable from './BatchTable';
 import IngredientTable from './IngredientTable';
 
@@ -9,9 +10,9 @@ function BatchPage(props){
 }
 
 function IngredientPage(props){
-    return <IngredientTable>
-
-    </IngredientTable>
+    return <div>
+        <IngredientTable></IngredientTable>
+    </div>
 }
 
-export {BatchPage};
+export {BatchPage,IngredientPage};

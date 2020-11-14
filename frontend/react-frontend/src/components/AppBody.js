@@ -1,11 +1,12 @@
 import React from 'react';
 import "../css/AppBody.css";
-import {BatchPage} from './Pages';
+import {BatchPage, IngredientPage} from './Pages';
 import {Route} from 'react-router-dom';
 
 function AppBody(){
     return <div className='app-body'>
         <Route path="/" exact component={BatchPage}></Route>
+        <Route path="/hraefni/" component={IngredientPage}></Route>
     </div>
 }
 

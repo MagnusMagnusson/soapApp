@@ -29,7 +29,7 @@ class BatchTable extends React.Component{
 
     current_tables(){
         let data = this.state.data.filter(x => x.current_status !== states.CUR && x.current_status !== states.DON);
-        data = this.state.data.map(x => <tr>
+        data = data.map(x => <tr>
             <td>{x.name}</td>
             <td>{x.design.name}</td>
             <td>{x.recipie.name}</td>
@@ -53,7 +53,7 @@ class BatchTable extends React.Component{
 
     curing_tables(){
         let data = this.state.data.filter(x => x.current_status === states.CUR);
-        data = this.state.data.map(x => <tr>
+        data = data.map(x => <tr>
             <td>{x.name}</td>
             <td>{x.design.name}</td>
             <td>{x.recipie.name}</td>
@@ -77,7 +77,7 @@ class BatchTable extends React.Component{
 
     done_tables(){
         let data = this.state.data.filter(x => x.current_status === states.DON);
-        data = this.state.data.map(x => <tr>
+        data = data.map(x => <tr>
             <td>{x.name}</td>
             <td>{x.design.name}</td>
             <td>{x.recipie.name}</td>

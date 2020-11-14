@@ -24,6 +24,9 @@ class Ingredient(models.Model):
         default=FRAGRANCE,
     )
     notes = models.TextField(default="", null=False)
+    url = models.URLField(default="")
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    currency = models.CharField(max_length=3, default="EUR")
     image = models.FileField(upload_to="uploads/img/ingredients/", null=True)
 
     def object(self):
@@ -33,8 +36,24 @@ class Ingredient(models.Model):
             'type': self.ingredient_type,
             'type_name': [name for (key,name) in self.INGREDIENT_TYPE_CHOICE if key==self.ingredient_type][0],
             'notes':self.notes,
+            'url':self.url,
+            'price':self.price,
+            'currency':self.currency,
             'picture_path':self.image.url if bool(self.image) else "", # pylint: disable=no-member
         }
+    
+    @staticmethod
+    def create(data):
+        o = Ingredient()
+        o.name = data['name']
+        o.ingredient_type = data['type']
+        o.notes = data['notes'] if 'notes' in data else ""
+        o.url = data['url'] if 'url' in data else ""
+        o.price = data['price'] if 'price' in data else 0
+        o.currency = data['currency'] if 'currency' in data else 'ISK'
+        o.save()
+        return o
+
 
 class Recipie(models.Model):
     name = models.CharField(max_length=128, null=False, default="Uppskrift")
