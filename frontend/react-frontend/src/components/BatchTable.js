@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/BatchTable.css';
+import '@/css/BatchTable.css';
 
 let states={
     "DES":1,

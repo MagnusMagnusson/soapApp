@@ -1,6 +1,6 @@
 import React from 'react';
-import "../css/AppBody.css";
-import {BatchPage, IngredientPage} from './Pages';
+import "@/css/AppBody.css";
+import {BatchPage, IngredientPage} from '@/components/Pages';
 import {Route} from 'react-router-dom';
 
 function AppBody(){

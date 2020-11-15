@@ -1,7 +1,7 @@
 import React from 'react';
-import {post} from '../scripts/request';
-import '../css/BatchTable.css';
-import '../css/misc.css';
+import {post} from '@/scripts/request';
+import '@/css/BatchTable.css';
+import '@/css/misc.css';
 
 
 let currencies=[

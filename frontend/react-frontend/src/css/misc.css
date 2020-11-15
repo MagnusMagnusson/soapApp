@@ -1,0 +1,33 @@
+.blue-button{
+    width:8em;
+    height:2.5em;
+    background-color: paleturquoise;
+    box-shadow: 3px 2px 3px 0px rgba(0,0,0,0.75);
+    border-radius: 10%;
+    margin-left:50%;
+    transform: translateX(-50%);
+    text-align: center;
+    line-height: 200%;
+}
+
+.half.blue-button{
+    padding:0px;
+    float:left;
+    margin-left:37%;
+    transform: translateX(-50%);
+}
+
+.half.blue-button:last-child{
+    padding:0px;
+    float:left;
+    margin-left:10%;
+    transform: translateX(-50%);
+}
+
+.blue-button:hover{
+    cursor: pointer;
+}
+
+.short{
+    width:5em;
+}

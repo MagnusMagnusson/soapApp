@@ -1,5 +1,5 @@
 import React from 'react';
-import "../css/Header.css";
+import "@/css/Header.css";
 import {Link, useLocation} from 'react-router-dom';
 
 function Header(){

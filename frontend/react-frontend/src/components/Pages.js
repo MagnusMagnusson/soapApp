@@ -1,6 +1,7 @@
  
 import BatchTable from './BatchTable';
-import IngredientTable from './IngredientTable';
+import IngredientTable from '@/components/Tables/IngredientTable';
+import RecipieTable from '@/components/Tables/RecipieTable';
 
 function BatchPage(props){
     return <div>
@@ -12,6 +13,12 @@ function BatchPage(props){
 function IngredientPage(props){
     return <div>
         <IngredientTable></IngredientTable>
+    </div>
+}
+
+function RecipiePage(props){
+    return <div>
+        <RecipiePage></RecipiePage>
     </div>
 }
 
