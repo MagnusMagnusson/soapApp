@@ -16,7 +16,8 @@ Including another URLconf
 from django.urls import path
 from api.models import Ingredient,Recipie,Design,Batch
 from api.views import processGroupRequest, get_all, get_by_id 
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("api/i/<int:id>", get_by_id,{"object":Ingredient}),
@@ -29,3 +30,6 @@ urlpatterns = [
     path("api/d/", get_all,{"object":Design}),
     path("api/b/", get_all,{"object":Batch}),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

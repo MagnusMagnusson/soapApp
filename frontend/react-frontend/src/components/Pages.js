@@ -7,19 +7,19 @@ function BatchPage(props){
     return <div>
             <BatchTable></BatchTable>
             <div>New</div>
-        </div>
+        </div>;
 }
 
 function IngredientPage(props){
     return <div>
         <IngredientTable></IngredientTable>
-    </div>
+    </div>;
 }
 
 function RecipiePage(props){
     return <div>
-        <RecipiePage></RecipiePage>
-    </div>
+        <RecipieTable></RecipieTable>
+    </div>;
 }
 
-export {BatchPage,IngredientPage};
+export {BatchPage,IngredientPage, RecipiePage};

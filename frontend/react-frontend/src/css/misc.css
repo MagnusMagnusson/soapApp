@@ -31,3 +31,8 @@
 .short{
     width:5em;
 }
+
+.faux_link:hover{
+    cursor: pointer;
+    text-decoration-line: underline;
+}

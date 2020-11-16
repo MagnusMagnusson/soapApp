@@ -21,8 +21,18 @@ def get_by_id(request, object=None, id=None):
 
 def get_all(request, object = None):
     x = object.objects.all()
-    res = [a.object() for a in x]
-    return respond(res, 200)
+    if 'ids' in request.GET:
+        idList = []
+        try:
+            id = request.GET['ids'].split(",")
+            idList = list(map(lambda x: int(x),id))
+        except ValueError as e: # pylint: disable=unused-variable
+            return respond({"Malformed ID's"}, 400)
+        res = [a.object() for a in x if a.id in idList]
+        return respond(res, 200)
+    else:
+        res = [a.object() for a in x]
+        return respond(res, 200)
 
 def processGroupRequest(request, object = None):
     if request.method == "GET":

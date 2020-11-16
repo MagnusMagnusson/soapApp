@@ -27,7 +27,7 @@ class Ingredient(models.Model):
     url = models.URLField(default="")
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, default="EUR")
-    image = models.FileField(upload_to="uploads/img/ingredients/", null=True)
+    image = models.ImageField(upload_to="uploads/img/ingredients/", null=True)
 
     def object(self):
         return {
@@ -45,28 +45,41 @@ class Ingredient(models.Model):
     @staticmethod
     def create(data):
         o = Ingredient()
-        o.name = data['name']
-        o.ingredient_type = data['type']
-        o.notes = data['notes'] if 'notes' in data else ""
-        o.url = data['url'] if 'url' in data else ""
-        o.price = data['price'] if 'price' in data else 0
-        o.currency = data['currency'] if 'currency' in data else 'ISK'
-        o.save()
+        o.patch(data)
         return o
+    def patch(self, data):
+        self.name = data['name']
+        self.ingredient_type = data['type']
+        self.notes = data['notes'] if 'notes' in data else ""
+        self.url = data['url'] if 'url' in data else ""
+        self.price = data['price'] if 'price' in data else 0
+        self.currency = data['currency'] if 'currency' in data else 'ISK'
+        self.save()
 
 
 class Recipie(models.Model):
     name = models.CharField(max_length=128, null=False, default="Uppskrift")
     notes = models.TextField(default="")
-    image = models.FileField(upload_to="uploads/img/recipies/", null=True)
+    image = models.ImageField(upload_to="uploads/img/recipies/", null=True)
     def object(self):
         return {
             'id':self.id, # pylint: disable=no-member
             'name':self.name,
             'notes':self.notes,
-            'ingredients':[x.object() for x in self.RecipieIngredient_set.all()], # pylint: disable=no-member
+            'ingredients':[x.object() for x in self.recipieingredient_set.all()], # pylint: disable=no-member
             'picture_path':self.image.url if bool(self.image) else "", # pylint: disable=no-member
         }
+
+    @staticmethod
+    def create(data):
+        o = Recipie()
+        o.patch(data)
+        return o 
+
+    def patch(self,data):
+        self.save()
+
+
 
 class RecipieIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
@@ -82,14 +95,14 @@ class RecipieIngredient(models.Model):
             'name':self.recipie.name,
             'id':self.recipie.id # pylint: disable=no-member
         },
-        'amount':self.amount+'g'
+        'amount':str(self.amount)+'g'
         }
         
 class Design(models.Model):
     name = models.CharField(max_length=128)
     notes = models.TextField(default="")
     ingredients = models.ManyToManyField(Ingredient)
-    image = models.FileField(upload_to="uploads/img/designs/", null=True)
+    image = models.ImageField(upload_to="uploads/img/designs/", null=True)
     def object(self):
         return{
             'name':self.name,
@@ -106,7 +119,7 @@ class Batch(models.Model):
     notes = models.TextField(default="")
     image = models.FileField(upload_to="uploads/img/batches/", null=True)
     def object(self):
-        states = self.Batch_State_set.all().order_by('date')
+        states = self.Batch_State_set.all().order_by('date')# pylint: disable=no-member
         return {
             'name':self.name,
             'design':{ 'name':self.design.name, 'id':self.design.id}, # pylint: disable=no-member
