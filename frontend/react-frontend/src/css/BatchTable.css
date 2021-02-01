@@ -17,3 +17,51 @@
     border-top: 1px solid black;
     text-align: center;
 }
+
+.smallWindow{
+    min-height: 55vh;
+    width:90%;
+    left:5%;
+    top:5%;
+    background-color: rgb(210, 246, 248);
+    position: relative;
+    border-radius: 5%;
+    box-shadow: 0px 3px 20px -3px rgba(0,0,0,0.75);
+}
+
+.smallWindow input,.smallWindow textarea {
+    background-color: rgb(194, 249, 255);
+    border-radius: 5%;
+    border:3px solid rgb(110, 184, 192);
+    text-align: center;
+}
+
+
+.smallWindow .title{
+    width:25%;
+    font-size: 2em;
+    position: absolute;
+    left:5%;
+}
+
+.smallWindow .description{
+    width:45%;
+    max-width:43%;
+    min-height:3em;
+    max-height:18%;
+    text-align: left;
+    font-size: 1.2em;
+    position: absolute;
+    left:5%;
+    top:20%;
+    padding:1%;
+}
+
+.smallWindow .recipe-ingredient-table{
+    width:90%;
+    left:5%;
+    top:50%;
+    height:45%;
+    overflow-y: scroll;
+    position: absolute;
+}

@@ -28,7 +28,12 @@ class Ingredient(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, default="EUR")
     image = models.ImageField(upload_to="uploads/img/ingredients/", null=True)
+    gram_amount = models.IntegerField(null = True, default = 100)
 
+    @property
+    def kg_price(self):
+        return (1000.00/self.gram_amount) * float(self.price)
+    
     def object(self):
         return {
             'id': self.id, # pylint: disable=no-member
@@ -38,6 +43,8 @@ class Ingredient(models.Model):
             'notes':self.notes,
             'url':self.url,
             'price':self.price,
+            'price_per_kg':self.kg_price,
+            'grams':self.gram_amount,
             'currency':self.currency,
             'picture_path':self.image.url if bool(self.image) else "", # pylint: disable=no-member
         }
@@ -48,12 +55,12 @@ class Ingredient(models.Model):
         o.patch(data)
         return o
     def patch(self, data):
-        self.name = data['name']
-        self.ingredient_type = data['type']
-        self.notes = data['notes'] if 'notes' in data else ""
-        self.url = data['url'] if 'url' in data else ""
-        self.price = data['price'] if 'price' in data else 0
-        self.currency = data['currency'] if 'currency' in data else 'ISK'
+        if('name' in data): self.name = data['name']
+        if('type' in data): self.ingredient_type = data['type']
+        if('notes' in data): self.notes = data['notes']
+        if('url' in data): self.url = data['url']
+        if('price' in data): self.price = data['price']
+        if('currency' in data): self.currency = data['currency']
         self.save()
 
 

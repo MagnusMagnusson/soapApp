@@ -1,18 +1,8 @@
 import React from 'react';
 import {post} from '@/scripts/request';
+import Recipie from '@/components/Overviews/Recipie';
 import '@/css/BatchTable.css';
 import '@/css/misc.css';
-
-
-function IngredientList(props){
-    let ings = props.recipie.ingredients.map(ing => 
-        <p key={ing.ingredient.id}>{props.ingredients[ing.ingredient.id].ingredient.name}</p>)
-    return (
-        <div><h3>{props.recipie.name}</h3>
-        {ings}
-        </div>
-    );
-}
 
 class RecipieTable extends React.Component{
     constructor(props){
@@ -25,6 +15,9 @@ class RecipieTable extends React.Component{
         }
         this.getData = this.getData.bind(this);
         this.showIngredients = this.showIngredients.bind(this);
+    }
+
+    componentDidMount(){
         this.getData();
     }
 
@@ -37,6 +30,7 @@ class RecipieTable extends React.Component{
     }
 
     showIngredients(recipie){
+        console.log("EE");
         let missingIngredients = [];
         let amountCache = {}
         for(let ing of recipie.ingredients){
@@ -80,7 +74,7 @@ class RecipieTable extends React.Component{
             (x) => {
                 let img = x.picture_path === "" ? "":<a href={x.picture_path}>Sjá skjal</a>;
 
-                return <tr>
+                return <tr key={x.id}>
                     <td>
                         {x.name}
                     </td>
@@ -121,7 +115,7 @@ class RecipieTable extends React.Component{
     render(){
         let ingredientList = null;
         if (this.state.selectedRecipie && !this.state.pending_ingredient_fetch){
-            ingredientList = <IngredientList recipie={this.state.selectedRecipie} ingredients={this.state.ingCache}></IngredientList>
+            ingredientList = <Recipie method="patch" recipie={this.state.selectedRecipie} ingredients={this.state.ingCache}></Recipie>
         }
 
         return (
